@@ -5,6 +5,8 @@ Description: Get weather from OpenWeatherMap.org based on lat-lon coordinates.
 module XMobar.Plugins.ProperWeather
   ( module WM
   , module Coords
+  , PWeather(..)
+  , owmConf
   ) where
 
 import qualified Data.Text                     as T
@@ -29,7 +31,7 @@ data PWeather = PwLatLon
 
 instance XM.Exec PWeather where
 
-  run pw = runOwm <&> either show show
+  run pw = runOwm <&> either show (T.unpack . displayOneCall)
    where
     runOwm = runExceptT . (`runReaderT` conf) . runOwmT $ oneCall
     conf   = owmConf pw
