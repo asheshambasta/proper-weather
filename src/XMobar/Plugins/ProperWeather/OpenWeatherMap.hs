@@ -62,6 +62,7 @@ owmReq :: OwmConf -> HS.Request
 owmReq OwmConf { _owmApiKey = ApiKey k } =
   HS.setRequestHost "api.openweathermap.org"
     . HS.setRequestSecure True
+    . HS.setRequestPort 443
     . HS.setRequestQueryString params
     $ HS.defaultRequest
   where params = [("appid", Just $ TE.encodeUtf8 k), ("units", Just "metric")]
