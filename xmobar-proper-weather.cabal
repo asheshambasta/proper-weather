@@ -1,0 +1,65 @@
+cabal-version:       2.2
+name:                xmobar-proper-weather
+version:             0.1.0.0
+synopsis:            Proper weather information
+description:         Generate and get proper weather info. 
+-- bug-reports:
+-- license:
+-- license-file:        LICENSE
+author:              Ashesh Ambasta
+maintainer:          ashesh.ambasta@gmail.com
+-- copyright:
+-- category:
+build-type:          Simple
+extra-source-files:  CHANGELOG.md
+
+common common-extensions
+  default-language: Haskell2010
+  default-extensions:
+    DeriveGeneric
+    DerivingVia 
+    FlexibleContexts
+    FlexibleInstances
+    GADTs
+    InstanceSigs
+    LambdaCase
+    MultiParamTypeClasses
+    NamedFieldPuns
+    OverloadedStrings
+    PackageImports
+    RecordWildCards
+    ScopedTypeVariables
+    TupleSections
+    TypeApplications
+    ViewPatterns
+
+common common-ghc-options
+  ghc-options:
+    -Wall
+    -fno-warn-missing-signatures
+
+common common-build-depends
+   build-depends:       
+    base-noprelude >=4.12 && <4.14
+    , xmobar 
+    , protolude 
+    , http-client 
+    , text
+
+library 
+
+  import: common-extensions
+        , common-ghc-options 
+        , common-build-depends
+
+  other-modules:
+
+  mixins: protolude (Protolude as Prelude)
+  exposed-modules:
+    XMobar.Plugins.ProperWeather
+    XMobar.Plugins.ProperWeather.OpenWeatherMap
+
+  hs-source-dirs:
+    src 
+
+  default-language:    Haskell2010
