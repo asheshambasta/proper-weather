@@ -22,17 +22,5 @@
         "type": "tarball",
         "url": "https://github.com/nmattia/niv/archive/ba57d5a29b4e0f2085917010380ef3ddc3cf380f.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "nixpkgs": {
-        "branch": "nixos-20.03",
-        "description": "DEPRECATED! This is an obsolete, read-only mirror of the NixOS/nixpkgs repository.",
-        "homepage": "https://github.com/NixOS/nixpkgs",
-        "owner": "NixOS",
-        "repo": "nixpkgs-channels",
-        "rev": "4b6bfecc0bd",
-        "sha256": "0wi8641v4345jcqk7myq3dknczps1gbsf48q314wavl5kga8r67f",
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs-channels/archive/4b6bfecc0bd.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }

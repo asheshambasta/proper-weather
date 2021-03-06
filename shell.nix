@@ -1,10 +1,10 @@
-{ optimize ? false }:
+{ optimize ? false, nixpkgs ? (import <nixpkgs>) }:
 let
-  nixpkgs = import (import ./nix/sources.nix).nixpkgs { };
+  pkgs = nixpkgs { };
   release = import ./release.nix { inherit optimize; };
-in nixpkgs.haskellPackages.shellFor {
+in pkgs.haskellPackages.shellFor {
   packages = p: builtins.attrValues release;
-  buildInputs = with nixpkgs; [
+  buildInputs = with pkgs; [
     inotify-tools
     haskellPackages.cabal-install
     haskellPackages.ghcid
