@@ -1,12 +1,15 @@
 module XMobar.Plugins.ProperWeather.OpenWeatherMap.Weather
-  ( Current(..)
+  ( Weather(..)
+  , Current(..)
   , OneCall(..)
-  , displayOneCall
-  , displayDesc
+  , displayWeather
   ) where
 
 import           Data.Aeson
 import qualified Data.Text                     as T
+
+newtype Weather = WOneCall OneCall
+                deriving (Eq, Show, FromJSON) via OneCall
 
 data WeatherDescription = WeatherDescription
   { _wdIcon :: Maybe Text
@@ -55,3 +58,8 @@ displayOneCall (OneCall Current {..}) = T.intercalate
 displayDesc :: WeatherDescription -> Text
 displayDesc WeatherDescription {..} =
   fromMaybe "" _wdMain <> "/" <> fromMaybe "" _wdDesc
+
+-- | Display the weather properly
+displayWeather :: Weather -> Text
+displayWeather = \case
+  WOneCall oc -> displayOneCall oc

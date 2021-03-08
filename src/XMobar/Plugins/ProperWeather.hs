@@ -6,6 +6,7 @@ module XMobar.Plugins.ProperWeather
   ( module WM
   , module Coords
   , PWeather(..)
+  , pWeather
   , owmConf
   ) where
 
@@ -29,12 +30,16 @@ data PWeather = PwLatLon
   }
   deriving (Eq, Show)
 
+-- | Run a `PWeather` configuration to get the weather data. 
+pWeather :: MonadIO m => PWeather -> m (Either PwErr WM.Weather)
+pWeather pw = liftIO runOwm
+ where
+  runOwm = runExceptT . (`runReaderT` conf) . runOwmT $ oneCall
+  conf   = owmConf pw
+
 instance XM.Exec PWeather where
 
-  run pw = runOwm <&> either show (T.unpack . displayOneCall)
-   where
-    runOwm = runExceptT . (`runReaderT` conf) . runOwmT $ oneCall
-    conf   = owmConf pw
+  run   = pWeather >=> pure . either show (T.unpack . displayWeather)
 
   alias = T.unpack . _pwAlias
 

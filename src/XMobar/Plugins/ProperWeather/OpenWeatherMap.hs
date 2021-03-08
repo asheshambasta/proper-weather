@@ -42,7 +42,7 @@ instance Show ApiKey where
 
 -- | Make an API call to the <https://openweathermap.org/api/one-call-api one-call-api> 
 oneCall
-  :: (MonadIO m, MonadReader OwmConf m, MonadError Err.PwErr m) => m W.OneCall
+  :: (MonadIO m, MonadReader OwmConf m, MonadError Err.PwErr m) => m W.Weather
 oneCall = do
   conf@OwmConf {..} <- ask
   HS.httpJSONEither (oneCallReq conf)
