@@ -14,7 +14,6 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md
 
 common common-extensions
-  default-language: Haskell2010
   default-extensions:
     DeriveGeneric
     DerivingVia 
@@ -32,6 +31,7 @@ common common-extensions
     TupleSections
     TypeApplications
     ViewPatterns
+  default-language: Haskell2010
 
 common common-ghc-options
   ghc-options:
@@ -46,6 +46,7 @@ common common-build-depends
     , http-conduit >= 2.3.7.3 && < 2.4
     , text >= 1.2.3.1 && < 1.3
     , aeson >= 1.4.6.0 && < 1.5
+  mixins: protolude (Protolude as Prelude)
 
 library 
 
@@ -58,11 +59,35 @@ library
     XMobar.Plugins.ProperWeather.Error
     XMobar.Plugins.ProperWeather.OpenWeatherMap.Weather
 
-  mixins: protolude (Protolude as Prelude)
   exposed-modules:
     XMobar.Plugins.ProperWeather
     XMobar.Plugins.ProperWeather.OpenWeatherMap
   hs-source-dirs:
     src 
 
-  default-language:    Haskell2010
+executable proper-weather   
+
+  import: common-extensions
+        , common-build-depends 
+
+  build-depends: 
+      optparse-applicative 
+    , xmobar-proper-weather
+
+  other-modules:
+    Paths_xmobar_proper_weather
+
+  main-is: Main.hs 
+
+  hs-source-dirs: 
+    app 
+
+  ghc-options:
+    -threaded
+    -rtsopts
+    -with-rtsopts=-N
+    -fwarn-incomplete-patterns
+    -Wall
+    -Wunused-imports
+    -Wno-partial-type-signatures
+    -O2

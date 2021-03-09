@@ -49,11 +49,11 @@ instance FromJSON OneCall where
 
 displayOneCall :: OneCall -> Text
 displayOneCall (OneCall Current {..}) = T.intercalate
-  " | "
-  [showTemp _cTemp, showTemp _cFeelsLike, descs]
+  ", "
+  [showTemp _cTemp, "FL: " <> showTemp _cFeelsLike, descs]
  where
-  showTemp = (<> "C") . show
-  descs    = T.intercalate "|" $ displayDesc <$> _cWeatherDescs
+  showTemp = (<> "℃") . show
+  descs    = T.intercalate " & " $ displayDesc <$> _cWeatherDescs
 
 displayDesc :: WeatherDescription -> Text
 displayDesc WeatherDescription {..} =

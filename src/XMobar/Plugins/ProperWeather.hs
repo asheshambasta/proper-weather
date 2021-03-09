@@ -1,10 +1,13 @@
 {-|
 Module: XMobar.Plugins.ProperWeather
 Description: Get weather from OpenWeatherMap.org based on lat-lon coordinates. 
+
+Tet
 -}
 module XMobar.Plugins.ProperWeather
   ( module WM
   , module Coords
+  , Rate(..)
   , PWeather(..)
   , pWeather
   , owmConf
@@ -18,7 +21,7 @@ import           XMobar.Plugins.ProperWeather.OpenWeatherMap
 import           Xmobar                        as XM
                                          hiding ( Rate )
 
-newtype Rate = Rate Int deriving (Eq, Show, Num, Ord, Real, Enum, Integral) via Int
+newtype Rate = Rate Int deriving (Eq, Show, Read, Num, Ord, Real, Enum, Integral) via Int
 
 -- | Coordinates based weather.  
 data PWeather = PwLatLon
@@ -28,7 +31,7 @@ data PWeather = PwLatLon
   , _pwLon    :: Lon
   , _pwRate   :: Rate
   }
-  deriving (Eq, Show)
+  deriving (Eq, Show, Read)
 
 -- | Run a `PWeather` configuration to get the weather data. 
 pWeather :: MonadIO m => PWeather -> m (Either PwErr WM.Weather)

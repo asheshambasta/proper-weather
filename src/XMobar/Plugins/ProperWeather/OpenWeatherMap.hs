@@ -34,7 +34,7 @@ newtype OwmT a = OwmT { runOwmT :: ReaderT OwmConf (ExceptT Err.PwErr IO) a }
 
 -- | The API Key for making calls to Owm
 newtype ApiKey = ApiKey { _unApiKey :: Text }
-               deriving (Eq, IsString) via Text
+               deriving (Eq, Read, IsString) via Text
 
 -- | The ApiKey is never "shown"
 instance Show ApiKey where
