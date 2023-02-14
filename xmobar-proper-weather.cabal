@@ -40,12 +40,12 @@ common common-ghc-options
 
 common common-build-depends
    build-depends:       
-    base-noprelude >= 4.12 && <4.14
-    , xmobar  >= 0.32
-    , protolude >= 0.2.3 && < 0.3
-    , http-conduit >= 2.3.7.3 && < 2.4
-    , text >= 1.2.3.1 && < 1.3
-    , aeson >= 1.4.6.0 && < 1.5
+    base-noprelude 
+    , xmobar  
+    , protolude 
+    , http-conduit 
+    , text 
+    , aeson 
   mixins: protolude (Protolude as Prelude)
 
 library 

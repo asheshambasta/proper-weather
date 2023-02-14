@@ -44,7 +44,7 @@ instance Show ApiKey where
 oneCall
   :: (MonadIO m, MonadReader OwmConf m, MonadError Err.PwErr m) => m W.Weather
 oneCall = do
-  conf@OwmConf {..} <- ask
+  conf <- ask
   HS.httpJSONEither (oneCallReq conf)
     >>= either (throwError . PwException) pure
     .   HS.getResponseBody

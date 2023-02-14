@@ -52,7 +52,7 @@ displayOneCall (OneCall Current {..}) = T.intercalate
   ", "
   [showTemp _cTemp, "FL: " <> showTemp _cFeelsLike, descs]
  where
-  showTemp = (<> "℃") . show
+  showTemp = (<> "℃") . show . round @Double @Integer  
   descs    = T.intercalate " & " $ displayDesc <$> _cWeatherDescs
 
 displayDesc :: WeatherDescription -> Text
