@@ -1,10 +1,8 @@
-args@{ optimize , nixpkgs ? (import <nixpkgs>) }:
+let sources = import ./nix/sources.nix;
+in args@{ optimize, nixpkgs ? (import sources.nixpkgs) }:
 let
-  sources = import ./nix/sources.nix;
 
-  overlays = (with sources; [
-    (import ./overlay.nix args)
-  ]);
+  overlays = [ (import ./overlay.nix args) ];
   nixpkgs-overlayed = nixpkgs { inherit overlays; };
 
 in { inherit (nixpkgs-overlayed.haskellPackages) xmobar-proper-weather; }
