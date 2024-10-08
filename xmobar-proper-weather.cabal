@@ -1,17 +1,10 @@
 cabal-version:       2.2
 name:                xmobar-proper-weather
-version:             0.1.0.0
+version:             1.0.1
 synopsis:            Proper weather information
 description:         Generate and get proper weather info. 
--- bug-reports:
--- license:
--- license-file:        LICENSE
 author:              Ashesh Ambasta
-maintainer:          ashesh.ambasta@gmail.com
--- copyright:
--- category:
-build-type:          Simple
-extra-source-files:  CHANGELOG.md
+maintainer:          ashesh@asheshambasta.com
 
 common common-extensions
   default-extensions:
@@ -46,7 +39,6 @@ common common-build-depends
     , http-conduit 
     , text 
     , aeson 
-  mixins: protolude (Protolude as Prelude)
 
 library 
 
@@ -60,6 +52,7 @@ library
     XMobar.Plugins.ProperWeather.OpenWeatherMap.Weather
 
   exposed-modules:
+    Prelude 
     XMobar.Plugins.ProperWeather
     XMobar.Plugins.ProperWeather.OpenWeatherMap
   hs-source-dirs:
