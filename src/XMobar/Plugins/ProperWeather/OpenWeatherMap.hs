@@ -53,7 +53,7 @@ oneCall = do
 oneCallReq :: OwmConf -> HS.Request
 oneCallReq conf@OwmConf { _owmLat = Lat lat, _owmLon = Lon lon } =
   HS.addToRequestQueryString params
-    . HS.setRequestPath "/data/2.5/onecall"
+    . HS.setRequestPath "/data/3.0/onecall"
     $ owmReq conf
   where params = [("lat", Just $ show lat), ("lon", Just $ show lon)]
 
