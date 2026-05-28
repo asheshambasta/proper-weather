@@ -55,9 +55,33 @@ displayOneCall (OneCall Current {..}) = T.intercalate
   showTemp = (<> "℃") . show . round @Double @Integer  
   descs    = T.intercalate " & " $ displayDesc <$> _cWeatherDescs
 
+iconToSymbol :: Text -> Text
+iconToSymbol = \case
+  "01d" -> "☼"
+  "01n" -> "☽"
+  "02d" -> "☼☁"
+  "02n" -> "☁"
+  "03d" -> "☁"
+  "03n" -> "☁"
+  "04d" -> "☁"
+  "04n" -> "☁"
+  "09d" -> "☂"
+  "09n" -> "☂"
+  "10d" -> "☂"
+  "10n" -> "☂"
+  "11d" -> "ϟ"
+  "11n" -> "ϟ"
+  "13d" -> "✻"
+  "13n" -> "✻"
+  "50d" -> "▒"
+  "50n" -> "▒"
+  _     -> "?"
+
 displayDesc :: WeatherDescription -> Text
 displayDesc WeatherDescription {..} =
-  fromMaybe "" _wdMain <> "/" <> fromMaybe "" _wdDesc
+  icon <> fromMaybe "" _wdMain <> "/" <> fromMaybe "" _wdDesc
+ where
+  icon = maybe "" (<> " ") . fmap iconToSymbol $ _wdIcon
 
 -- | Display the weather properly
 displayWeather :: Weather -> Text
