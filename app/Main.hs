@@ -21,7 +21,7 @@ main =
   where
     runPw = Pw.pWeather >=> either failure disp
     failure err = putStrLn @Text (show err) >> exitFailure
-    disp pw = putStrLn (Pw.displayWeather pw) >> exitSuccess
+    disp pw = putStrLn (Pw.displayForecast pw) >> exitSuccess
 
 runPwP :: A.ParserInfo Conf
 runPwP =
@@ -45,17 +45,10 @@ confFileP =
 
 pwP :: A.Parser Pw.PWeather
 pwP = do
-  _pwApiKey <- apiKeyP
   _pwLat <- latP
   _pwLon <- lonP
-  pure Pw.PwLatLon {_pwAlias = "Executable", _pwRate = Pw.Rate 0, ..}
+  pure Pw.PwLatLon {..}
   where
-    -- aliasP  = A.strOption (A.long "alias" <> A.help "Alias, doesn't make sense in executable mode.")
-    apiKeyP =
-      Pw.ApiKey
-        <$> A.option
-          A.auto
-          (A.long "api-key" <> A.short 'K' <> A.help "OpenWeatherMap API key")
     latP =
       Pw.Lat
         <$> A.option

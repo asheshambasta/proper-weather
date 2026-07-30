@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                xmobar-proper-weather
-version:             1.0.1
+version:             2.0.0
 synopsis:            Proper weather information
 description:         Generate and get proper weather info. 
 author:              Ashesh Ambasta
@@ -32,13 +32,12 @@ common common-ghc-options
     -fno-warn-missing-signatures
 
 common common-build-depends
-   build-depends:       
-    base-noprelude 
-    , xmobar  
-    , protolude 
-    , http-conduit 
-    , text 
-    , aeson 
+   build-depends:
+    base-noprelude
+    , protolude
+    , http-conduit
+    , text
+    , aeson
 
 library 
 
@@ -49,12 +48,12 @@ library
   other-modules:
     XMobar.Plugins.ProperWeather.Coords
     XMobar.Plugins.ProperWeather.Error
-    XMobar.Plugins.ProperWeather.OpenWeatherMap.Weather
+    XMobar.Plugins.ProperWeather.OpenMeteo.Weather
 
   exposed-modules:
-    Prelude 
+    Prelude
     XMobar.Plugins.ProperWeather
-    XMobar.Plugins.ProperWeather.OpenWeatherMap
+    XMobar.Plugins.ProperWeather.OpenMeteo
   hs-source-dirs:
     src 
 

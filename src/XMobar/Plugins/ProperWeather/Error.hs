@@ -4,7 +4,7 @@ module XMobar.Plugins.ProperWeather.Error
   ) where
 
 data PwErr where
-  PwOpenWeatherMapErr ::Text -> PwErr
+  PwApiErr ::Text -> PwErr
   PwException ::Exception e => e -> PwErr
 
 deriving instance Show PwErr

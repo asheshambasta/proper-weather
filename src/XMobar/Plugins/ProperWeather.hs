@@ -1,55 +1,36 @@
 {-|
 Module: XMobar.Plugins.ProperWeather
-Description: Get weather from OpenWeatherMap.org based on lat-lon coordinates. 
+Description: Get weather from Open-Meteo based on lat-lon coordinates.
 
-Tet
+Exposes an executable driven config; xmobar consumes its output via @Run Com@.
 -}
 module XMobar.Plugins.ProperWeather
   ( module WM
   , module Coords
-  , Rate(..)
   , PWeather(..)
   , pWeather
-  , owmConf
+  , meteoConf
   ) where
 
-import qualified Data.Text                     as T
 import           XMobar.Plugins.ProperWeather.Coords
                                                as Coords
-import           XMobar.Plugins.ProperWeather.OpenWeatherMap
+import           XMobar.Plugins.ProperWeather.OpenMeteo
                                                as WM
-import           Xmobar                        as XM
-                                         hiding ( Rate )
 
-newtype Rate = Rate Int deriving (Eq, Show, Read, Num, Ord, Real, Enum, Integral) via Int
-
--- | Coordinates based weather.  
+-- | Coordinates based weather configuration.
 data PWeather = PwLatLon
-  { _pwAlias  :: Text
-  , _pwApiKey :: WM.ApiKey
-  , _pwLat    :: Lat
-  , _pwLon    :: Lon
-  , _pwRate   :: Rate
+  { _pwLat :: Lat
+  , _pwLon :: Lon
   }
   deriving (Eq, Show, Read)
 
--- | Run a `PWeather` configuration to get the weather data. 
-pWeather :: MonadIO m => PWeather -> m (Either PwErr WM.Weather)
-pWeather pw = liftIO runOwm
+-- | Run a `PWeather` configuration to get the weather data.
+pWeather :: MonadIO m => PWeather -> m (Either PwErr WM.Forecast)
+pWeather pw = liftIO runMeteo
  where
-  runOwm = runExceptT . (`runReaderT` conf) . runOwmT $ oneCall
-  conf   = owmConf pw
+  runMeteo = runExceptT . (`runReaderT` conf) . runMeteoT $ forecast
+  conf     = meteoConf pw
 
-instance XM.Exec PWeather where
-
-  run   = pWeather >=> pure . either show (T.unpack . displayWeather)
-
-  alias = T.unpack . _pwAlias
-
-  rate PwLatLon { _pwRate = Rate r } = r
-
--- | Generate a configuration value from `PWeather` 
-owmConf :: PWeather -> OwmConf
-owmConf PwLatLon {..} =
-  OwmConf { _owmApiKey = _pwApiKey, _owmLat = _pwLat, _owmLon = _pwLon }
-
+-- | Generate a configuration value from `PWeather`.
+meteoConf :: PWeather -> MeteoConf
+meteoConf PwLatLon {..} = MeteoConf { _mcLat = _pwLat, _mcLon = _pwLon }
